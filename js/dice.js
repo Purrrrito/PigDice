@@ -35,6 +35,16 @@ function createNewGame() {
 }
 function rollDie() {
     let currTotal = parseInt(document.getElementById("total").value);
+    let randomNum = generateRandomValue(1, 6);
+    if (randomNum == 1) {
+        changePlayers();
+        currTotal = 0;
+    }
+    if (randomNum > 1) {
+        currTotal += randomNum;
+    }
+    document.getElementById("die").value = randomNum.toString();
+    document.getElementById("total").value = currTotal.toString();
 }
 function holdDie() {
     changePlayers();
