@@ -18,6 +18,14 @@ function changePlayers():void{
 
     //swap from player to player by comparing current name to player names
     //set currentPlayerName to the next player
+    if (currentPlayerName == player1Name) {
+        currentPlayerName = player2Name;
+        (<HTMLInputElement>document.getElementById("current")).innerText = player2Name
+    }
+    else {
+        currentPlayerName = player1Name;
+        (<HTMLInputElement>document.getElementById("current")).innerText = player1Name
+    }
 }
 
 window.onload = function(){
@@ -38,6 +46,7 @@ function createNewGame(){
     //if both players don't have a name display error
     let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
     let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
+
     if (isEmptyOrWhitespace(player1Name) || isEmptyOrWhitespace(player2Name)) {
         alert("Both players must have a name!")
     }
@@ -65,14 +74,12 @@ function rollDie():void{
         //  set current total to 0
         currTotal = 0;
     }
-
     
     //if the roll is greater than 1
     if (randomNum > 1) {
         //  add roll value to current total
         currTotal += randomNum;
     }
-
 
     //set the die roll to value player rolled
     (<HTMLInputElement>document.getElementById("die")).value = randomNum.toString();
@@ -82,10 +89,29 @@ function rollDie():void{
 
 function holdDie():void{
     //get the current turn total
+    let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
+
     //determine who the current player is
+    let currentPlayerName = (<HTMLElement>document.getElementById("current")).innerText;
+    let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
+
     //add the current turn total to the player's total score
+    if (currentPlayerName == player1Name) {
+        let score1 = parseInt((<HTMLInputElement>document.getElementById("score1")).value);
+        currTotal += score1;
+        (<HTMLInputElement>document.getElementById("score1")).value = currTotal.toString();
+        (<HTMLInputElement>document.getElementById("die")).value = "0";
+    }
+    else {
+        let score2 = parseInt((<HTMLInputElement>document.getElementById("score2")).value);
+        currTotal += score2;
+        (<HTMLInputElement>document.getElementById("score2")).value = currTotal.toString();
+        (<HTMLInputElement>document.getElementById("die")).value = "0";
+    }
 
     //reset the turn total to 0
+    (<HTMLInputElement>document.getElementById("total")).value = "0";
 
     //change players
     changePlayers();

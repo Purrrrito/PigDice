@@ -10,6 +10,14 @@ function changePlayers() {
     let currentPlayerName = document.getElementById("current").innerText;
     let player1Name = document.getElementById("player1").value;
     let player2Name = document.getElementById("player2").value;
+    if (currentPlayerName == player1Name) {
+        currentPlayerName = player2Name;
+        document.getElementById("current").innerText = player2Name;
+    }
+    else {
+        currentPlayerName = player1Name;
+        document.getElementById("current").innerText = player1Name;
+    }
 }
 window.onload = function () {
     let newGameBtn = document.getElementById("new_game");
@@ -47,5 +55,22 @@ function rollDie() {
     document.getElementById("total").value = currTotal.toString();
 }
 function holdDie() {
+    let currTotal = parseInt(document.getElementById("total").value);
+    let currentPlayerName = document.getElementById("current").innerText;
+    let player1Name = document.getElementById("player1").value;
+    let player2Name = document.getElementById("player2").value;
+    if (currentPlayerName == player1Name) {
+        let score1 = parseInt(document.getElementById("score1").value);
+        currTotal += score1;
+        document.getElementById("score1").value = currTotal.toString();
+        document.getElementById("die").value = "0";
+    }
+    else {
+        let score2 = parseInt(document.getElementById("score2").value);
+        currTotal += score2;
+        document.getElementById("score2").value = currTotal.toString();
+        document.getElementById("die").value = "0";
+    }
+    document.getElementById("total").value = "0";
     changePlayers();
 }
