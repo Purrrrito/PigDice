@@ -26,6 +26,10 @@ window.onload = function () {
     document.getElementById("hold").onclick = holdDie;
 };
 function createNewGame() {
+    document.getElementById("roll").disabled = false;
+    document.getElementById("hold").disabled = false;
+    document.getElementById("die").value = "0";
+    document.getElementById("winner").innerText = "";
     document.getElementById("score1").value = "0";
     document.getElementById("score2").value = "0";
     let player1Name = document.getElementById("player1").value;
@@ -48,22 +52,19 @@ function rollDie() {
     let player2Name = document.getElementById("player2").value;
     let currentPlayerName = document.getElementById("current").innerText;
     let currTotal = parseInt(document.getElementById("total").value);
-    let randomNum = generateRandomValue(50, 100);
+    let randomNum = generateRandomValue(1, 6);
     if (randomNum == 1) {
         changePlayers();
         currTotal = 0;
     }
     if (randomNum > 1) {
         currTotal += randomNum;
-        if (currentPlayerName == player1Name && score1 + currTotal >= 100) {
+        if ((currentPlayerName == player1Name && score1 + currTotal >= 100) || (currentPlayerName == player2Name && score2 + currTotal >= 100)) {
             document.getElementById("total").value = currTotal.toString();
             holdDie();
             document.getElementById("winner").innerText = "Congratulations " + currentPlayerName + ", you won the game!";
-        }
-        else if (currentPlayerName == player2Name && score2 + currTotal >= 100) {
-            document.getElementById("total").value = currTotal.toString();
-            holdDie();
-            document.getElementById("winner").innerText = "Congratulations " + currentPlayerName + ", you won the game!";
+            document.getElementById("roll").disabled = true;
+            document.getElementById("hold").disabled = true;
         }
     }
     document.getElementById("die").value = randomNum.toString();
