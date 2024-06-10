@@ -62,10 +62,15 @@ function createNewGame(){
 }
 
 function rollDie():void{
+    let score1 = parseInt((<HTMLInputElement>document.getElementById("score1")).value);
+    let score2 = parseInt((<HTMLInputElement>document.getElementById("score2")).value);
+    let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
+    let currentPlayerName = (<HTMLElement>document.getElementById("current")).innerText;
     let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
     
     //roll the die and get a random value 1 - 6 (use generateRandomValue function)
-    let randomNum = generateRandomValue(1, 6);
+    let randomNum = generateRandomValue(50, 100);
 
     //if the roll is 1
     if (randomNum == 1) {
@@ -79,12 +84,24 @@ function rollDie():void{
     if (randomNum > 1) {
         //  add roll value to current total
         currTotal += randomNum;
+
+        if (currentPlayerName == player1Name && score1 + currTotal >= 100) {
+            (<HTMLInputElement>document.getElementById("total")).value = currTotal.toString();
+            holdDie();
+            document.getElementById("winner").innerText = "Congratulations " + currentPlayerName + ", you won the game!";
+        }
+        else if (currentPlayerName == player2Name && score2 + currTotal >= 100) {
+            (<HTMLInputElement>document.getElementById("total")).value = currTotal.toString();
+            holdDie();
+            document.getElementById("winner").innerText = "Congratulations " + currentPlayerName + ", you won the game!";
+        }
     }
 
     //set the die roll to value player rolled
     (<HTMLInputElement>document.getElementById("die")).value = randomNum.toString();
     //display current total on form
     (<HTMLInputElement>document.getElementById("total")).value = currTotal.toString();
+
 }
 
 function holdDie():void{
@@ -94,7 +111,6 @@ function holdDie():void{
     //determine who the current player is
     let currentPlayerName = (<HTMLElement>document.getElementById("current")).innerText;
     let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
-    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
 
     //add the current turn total to the player's total score
     if (currentPlayerName == player1Name) {

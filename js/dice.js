@@ -42,14 +42,29 @@ function createNewGame() {
     }
 }
 function rollDie() {
+    let score1 = parseInt(document.getElementById("score1").value);
+    let score2 = parseInt(document.getElementById("score2").value);
+    let player1Name = document.getElementById("player1").value;
+    let player2Name = document.getElementById("player2").value;
+    let currentPlayerName = document.getElementById("current").innerText;
     let currTotal = parseInt(document.getElementById("total").value);
-    let randomNum = generateRandomValue(1, 6);
+    let randomNum = generateRandomValue(50, 100);
     if (randomNum == 1) {
         changePlayers();
         currTotal = 0;
     }
     if (randomNum > 1) {
         currTotal += randomNum;
+        if (currentPlayerName == player1Name && score1 + currTotal >= 100) {
+            document.getElementById("total").value = currTotal.toString();
+            holdDie();
+            document.getElementById("winner").innerText = "Congratulations " + currentPlayerName + ", you won the game!";
+        }
+        else if (currentPlayerName == player2Name && score2 + currTotal >= 100) {
+            document.getElementById("total").value = currTotal.toString();
+            holdDie();
+            document.getElementById("winner").innerText = "Congratulations " + currentPlayerName + ", you won the game!";
+        }
     }
     document.getElementById("die").value = randomNum.toString();
     document.getElementById("total").value = currTotal.toString();
@@ -58,7 +73,6 @@ function holdDie() {
     let currTotal = parseInt(document.getElementById("total").value);
     let currentPlayerName = document.getElementById("current").innerText;
     let player1Name = document.getElementById("player1").value;
-    let player2Name = document.getElementById("player2").value;
     if (currentPlayerName == player1Name) {
         let score1 = parseInt(document.getElementById("score1").value);
         currTotal += score1;
