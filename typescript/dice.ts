@@ -1,8 +1,11 @@
+function isEmptyOrWhitespace(str:string):boolean {
+    return str.trim().length === 0;
+}
+
 function generateRandomValue(minValue:number, maxValue:number):number{
     var random = Math.random();
     
-    //TODO: use random to generate a number between min and max
-    
+    random = Math.floor(random * (maxValue - minValue + 1)) + minValue;
 
     return random;
 }
@@ -28,17 +31,25 @@ window.onload = function(){
 
 function createNewGame(){
     //set player 1 and player 2 scores to 0
+    (<HTMLInputElement>document.getElementById("score1")).value = "0";
+    (<HTMLInputElement>document.getElementById("score2")).value = "0";
 
     //verify each player has a name
     //if both players don't have a name display error
-
+    let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Name = (<HTMLInputElement>document.getElementById("player2")).value;
+    if (isEmptyOrWhitespace(player1Name) || isEmptyOrWhitespace(player2Name)) {
+        alert("Both players must have a name!")
+    }
     //if both players do have a name start the game!
-    (<HTMLElement>document.getElementById("turn")).classList.add("open");
-    (<HTMLInputElement>document.getElementById("total")).value = "0";
-    //lock in player names and then change players
-    (<HTMLInputElement>document.getElementById("player1")).setAttribute("disabled", "disabled");
-    (<HTMLInputElement>document.getElementById("player2")).setAttribute("disabled", "disabled");
-    changePlayers();
+    else {
+        (<HTMLElement>document.getElementById("turn")).classList.add("open");
+        (<HTMLInputElement>document.getElementById("total")).value = "0";
+        //lock in player names and then change players
+        (<HTMLInputElement>document.getElementById("player1")).setAttribute("disabled", "disabled");
+        (<HTMLInputElement>document.getElementById("player2")).setAttribute("disabled", "disabled");
+        changePlayers();
+    }
 }
 
 function rollDie():void{
